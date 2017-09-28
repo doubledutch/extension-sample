@@ -13,7 +13,7 @@ class HomeView extends Component {
   constructor() {
     super()
 
-    this.state = { task: '', userPrivateTasks: [], userPublicTasks: [], sharedTasks: [] }
+    this.state = { task: '', userPrivateTasks: [], sharedTasks: [] }
 
     this.signin = fbc.signin()
       .then(user => this.user = user)
@@ -37,20 +37,12 @@ class HomeView extends Component {
       sharedRef.on('child_removed', data => {
         this.setState({ sharedTasks: this.state.sharedTasks.filter(x => x.key !== data.key) })
       })
-
-      fbc.database.public.usersRef().on('value', data => {
-        const val = data.val()
-        const taskMaps = Object.keys(val || {}).map(uid => ({uid, tasks: val[uid].tasks})).filter(x=>x.tasks)
-        const userPublicTasks = [].concat.apply([], taskMaps.map(m => Object.keys(m.tasks).map(key => ({...m.tasks[key], key, uid: m.uid}))))
-        this.setState({userPublicTasks})
-      })
     })
   }
 
   render() {
-    const { userPrivateTasks, userPublicTasks, sharedTasks } = this.state
+    const { userPrivateTasks, sharedTasks } = this.state
     const tasks = userPrivateTasks.map(t => ({...t, type:'private'})).concat(
-      userPublicTasks.map(t => ({...t, type:'public'})),
       sharedTasks.map(t => ({...t, type:'shared'}))
     )
 
@@ -69,16 +61,16 @@ class HomeView extends Component {
           <TextInput style={s.composeText} placeholder="Add task..."
             value={this.state.task}
             onChangeText={task => this.setState({task})} />
-          <TouchableOpacity style={s.sendButton} onPress={this.createPrivateTask}><Text style={s.sendButtonText}>🕵️️</Text></TouchableOpacity>
-          <TouchableOpacity style={s.sendButton} onPress={this.createPublicTask}><Text style={s.sendButtonText}>📢</Text></TouchableOpacity>
-          <TouchableOpacity style={s.sendButton} onPress={this.createSharedTask}><Text style={s.sendButtonText}>⚽</Text></TouchableOpacity>
+          <View style={s.sendButtons}>
+            <TouchableOpacity style={s.sendButton} onPress={this.createPrivateTask}><Text style={s.sendButtonText}>+ private 🕵️️</Text></TouchableOpacity>
+            <TouchableOpacity style={s.sendButton} onPress={this.createSharedTask}><Text style={s.sendButtonText}>+ shared 📢</Text></TouchableOpacity>
+          </View>
         </View>
       </KeyboardAvoidingView>
     )
   }
 
   createPrivateTask = () => this.createTask(fbc.database.private.userRef)
-  createPublicTask = () => this.createTask(fbc.database.public.userRef)
   createSharedTask = () => this.createTask(fbc.database.public.allRef)
   
   createTask(ref) {
@@ -98,7 +90,6 @@ class HomeView extends Component {
     function getRef(task) {
       switch(task.type) {
         case 'private': return fbc.database.private.userRef('tasks').child(task.key)
-        case 'public': return fbc.database.public.usersRef(task.uid).child('tasks').child(task.key)
         case 'shared': return fbc.database.public.allRef('tasks').child(task.key)
       }
     }
@@ -133,12 +124,15 @@ const s = ReactNative.StyleSheet.create({
     backgroundColor: 'white',
     padding: 10
   },
+  sendButtons: {
+    justifyContent: 'center',
+  },
   sendButton: {
     justifyContent: 'center',
-    marginLeft: 10
+    margin: 5
   },
   sendButtonText: {
-    fontSize: 24
+    fontSize: 22
   },
   composeText: {
     flex: 1
