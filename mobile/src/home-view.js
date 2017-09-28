@@ -116,10 +116,7 @@ const s = ReactNative.StyleSheet.create({
   },
   scroll: {
     flex: 1,
-    paddingTop: 25,
-    paddingLeft: 15,
-    paddingRight: 10,
-    paddingBottom: 30
+    padding: 15
   },
   task: {
     flex: 1,
