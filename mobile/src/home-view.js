@@ -21,7 +21,6 @@ class HomeView extends Component {
   }
 
   componentWillMount() {
-    client.setTitle('feature-sample')
     this.signin.then(() => {
       const userPrivateRef = fbc.database.private.userRef('tasks')
       userPrivateRef.on('child_added', data => {
@@ -57,7 +56,7 @@ class HomeView extends Component {
 
     return (
       <KeyboardAvoidingView style={s.container} behavior="padding">
-        <TitleBar client={client} signin={this.signin} />
+        <TitleBar title="feature-sample" client={client} signin={this.signin} />
         <ScrollView style={s.scroll}>
           { tasks.map(task => (
             <View key={task.key} style={s.task}>
