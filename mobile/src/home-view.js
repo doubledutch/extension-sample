@@ -21,6 +21,7 @@ class HomeView extends Component {
   }
 
   componentWillMount() {
+    client.setTitle('feature-sample')
     this.signin.then(() => {
       const userPrivateRef = fbc.database.private.userRef('tasks')
       userPrivateRef.on('child_added', data => {
