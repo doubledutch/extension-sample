@@ -3,7 +3,7 @@ import ReactNative, {
   KeyboardAvoidingView, TouchableOpacity, Text, TextInput, View, ScrollView
 } from 'react-native'
 
-import client from '@doubledutch/rn-client'
+import client, { TitleBar } from '@doubledutch/rn-client'
 import FirebaseConnector from '@doubledutch/firebase-connector'
 const fbc = FirebaseConnector(client, 'feature-sample')
 
@@ -20,7 +20,7 @@ class HomeView extends Component {
       .catch(err => console.error(err))
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.signin.then(() => {
       const userPrivateRef = fbc.database.private.userRef('tasks')
       userPrivateRef.on('child_added', data => {
@@ -56,6 +56,7 @@ class HomeView extends Component {
 
     return (
       <KeyboardAvoidingView style={s.container} behavior="padding">
+        <TitleBar client={client} signin={this.signin} />
         <ScrollView style={s.scroll}>
           { tasks.map(task => (
             <View key={task.key} style={s.task}>
