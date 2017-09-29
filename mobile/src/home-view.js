@@ -48,12 +48,12 @@ class HomeView extends Component {
 
     return (
       <KeyboardAvoidingView style={s.container} behavior="padding">
-        <TitleBar title="feature-sample" client={client} signin={this.signin} />
+        <TitleBar title="Todos ✅" client={client} signin={this.signin} />
         <ScrollView style={s.scroll}>
           { tasks.map(task => (
             <View key={task.key} style={s.task}>
-              <TouchableOpacity onPress={() => this.markComplete(task)}><Text>✅</Text></TouchableOpacity>
-              <Text style={s.taskLabel}>{taskLabel(task)}</Text><Text> {task.text}</Text>
+              <TouchableOpacity onPress={() => this.markComplete(task)}><Text>✅  </Text></TouchableOpacity>
+              <Text style={s.taskLabel}>{taskLabel(task)}</Text><Text style={s.taskText}> {task.text}</Text>
             </View>
           ))}
         </ScrollView>
@@ -97,7 +97,7 @@ class HomeView extends Component {
 }
 
 function taskLabel(task) {
-  return task.type === 'public' ? `${task.creator.FirstName} ${task.creator.LastName}` : task.type
+  return task.type === 'shared' ? `${task.creator.FirstName} ${task.creator.LastName}` : task.type
 }
 
 const s = ReactNative.StyleSheet.create({
@@ -116,7 +116,11 @@ const s = ReactNative.StyleSheet.create({
     marginBottom: 10,
   },
   taskLabel: {
-    color: 'blue'
+    color: 'blue',
+    fontSize: 16
+  },
+  taskText: {
+    fontSize: 16
   },
   compose: {
     height: 70,
@@ -132,7 +136,8 @@ const s = ReactNative.StyleSheet.create({
     margin: 5
   },
   sendButtonText: {
-    fontSize: 22
+    fontSize: 20,
+    color: 'gray'
   },
   composeText: {
     flex: 1
