@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactNative, {
-  KeyboardAvoidingView, TouchableOpacity, Text, TextInput, View, ScrollView
+  KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView
 } from 'react-native'
 
 import client, { TitleBar } from '@doubledutch/rn-client'
@@ -47,7 +47,7 @@ class HomeView extends Component {
     )
 
     return (
-      <KeyboardAvoidingView style={s.container} behavior="padding">
+      <KeyboardAvoidingView style={s.container} behavior={Platform.select({ios: "padding", android: null})}>
         <TitleBar title="Todos ✅" client={client} signin={this.signin} />
         <ScrollView style={s.scroll}>
           { tasks.map(task => (
@@ -117,10 +117,10 @@ const s = ReactNative.StyleSheet.create({
   },
   taskLabel: {
     color: 'blue',
-    fontSize: 16
+    fontSize: 18
   },
   taskText: {
-    fontSize: 16
+    fontSize: 18
   },
   compose: {
     height: 70,
