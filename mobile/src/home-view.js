@@ -48,7 +48,7 @@ class HomeView extends Component {
 
     return (
       <KeyboardAvoidingView style={s.container} behavior={Platform.select({ios: "padding", android: null})}>
-        <TitleBar title="Todos ✅" client={client} signin={this.signin} />
+        <TitleBar title="To do ✅" client={client} signin={this.signin} />
         <ScrollView style={s.scroll}>
           { tasks.map(task => (
             <View key={task.key} style={s.task}>
