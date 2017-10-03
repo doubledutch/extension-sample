@@ -53,7 +53,7 @@ class HomeView extends Component {
           { tasks.map(task => (
             <View key={task.key} style={s.task}>
               <TouchableOpacity onPress={() => this.markComplete(task)}><Text>✅  </Text></TouchableOpacity>
-              <Text style={s.taskLabel}>{taskLabel(task)}</Text><Text style={s.taskText}> {task.text}</Text>
+              <Text style={s.taskText}><Text style={s.taskLabel}>{taskLabel(task)}</Text> {task.text}</Text>
             </View>
           ))}
         </ScrollView>
@@ -115,12 +115,12 @@ const s = ReactNative.StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 10,
   },
-  taskLabel: {
-    color: 'blue',
-    fontSize: 18
-  },
   taskText: {
-    fontSize: 18
+    fontSize: 18,
+    flex: 1
+  },
+  taskLabel: {
+    color: 'blue'
   },
   compose: {
     height: 70,
