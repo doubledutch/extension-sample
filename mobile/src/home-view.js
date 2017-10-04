@@ -3,7 +3,7 @@ import ReactNative, {
   KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView
 } from 'react-native'
 
-import client, { TitleBar } from '@doubledutch/rn-client'
+import client, { Avatar, TitleBar } from '@doubledutch/rn-client'
 import FirebaseConnector from '@doubledutch/firebase-connector'
 const fbc = FirebaseConnector(client, 'feature-sample')
 
@@ -52,8 +52,9 @@ class HomeView extends Component {
         <ScrollView style={s.scroll}>
           { tasks.map(task => (
             <View key={task.key} style={s.task}>
-              <TouchableOpacity onPress={() => this.markComplete(task)}><Text>✅  </Text></TouchableOpacity>
-              <Text style={s.taskText}><Text style={s.taskLabel}>{taskLabel(task)}</Text> {task.text}</Text>
+              <TouchableOpacity onPress={() => this.markComplete(task)}><Text style={s.checkmark}>✅  </Text></TouchableOpacity>
+              { renderCreator(task) }
+              <Text style={s.taskText}>{task.text}</Text>
             </View>
           ))}
         </ScrollView>
@@ -96,10 +97,12 @@ class HomeView extends Component {
   }
 }
 
-function taskLabel(task) {
-  return task.type === 'shared' ? `${task.creator.FirstName} ${task.creator.LastName}` : task.type
+function renderCreator(task) {
+  if (task.type === 'private') return <Text style={s.creatorEmoji}>🕵️️</Text>
+  return <Avatar user={task.creator} size={22} style={s.creatorAvatar} />
 }
 
+const fontSize = 18
 const s = ReactNative.StyleSheet.create({
   container: {
     flex: 1,
@@ -111,16 +114,23 @@ const s = ReactNative.StyleSheet.create({
   },
   task: {
     flex: 1,
-    alignItems: 'flex-start',
     flexDirection: 'row',
-    marginBottom: 10,
+    marginBottom: 10
+  },
+  checkmark: {
+    textAlign: 'center',
+    fontSize
+  },
+  creatorAvatar: {
+    marginRight: 4
+  },
+  creatorEmoji: {
+    marginRight: 4,
+    fontSize
   },
   taskText: {
-    fontSize: 18,
+    fontSize,
     flex: 1
-  },
-  taskLabel: {
-    color: 'blue'
   },
   compose: {
     height: 70,
