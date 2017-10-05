@@ -5,7 +5,7 @@ import ReactNative, {
 
 import client, { Avatar, TitleBar } from '@doubledutch/rn-client'
 import FirebaseConnector from '@doubledutch/firebase-connector'
-const fbc = FirebaseConnector(client, 'feature-sample')
+const fbc = FirebaseConnector(client, 'extension-sample')
 
 fbc.initializeAppWithSimpleBackend()
 

@@ -9,7 +9,7 @@ export default class App extends Component {
       <div>
         <h1>Public Sample</h1>
         <h3>Edit details here</h3>
-        <p>Add any attendee-specific functionality for your feature in the context of an event here.</p>
+        <p>Add any attendee-specific functionality for your extensions in the context of an event here.</p>
       </div>
     )
   }

@@ -4,8 +4,8 @@ import HomeView from './src/home-view'
 import { install } from '@doubledutch/rn-client/webShim'
 
 function runApp(DD) {
-  AppRegistry.registerComponent('feature-sample', () => HomeView)
-  AppRegistry.runApplication('feature-sample', {
+  AppRegistry.registerComponent('extension-sample', () => HomeView)
+  AppRegistry.runApplication('extension-sample', {
     rootTag: document.getElementById('react-root'),
     initialProps: { ddOverride: DD }
   })
