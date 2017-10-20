@@ -11,8 +11,6 @@
     "@doubledutch/firebase-connector": "^2.0.0",
     "@doubledutch/rn-client": "^2.1.0",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-es2015-loose": "^8.0.0",
     "base-64": "^0.1.0",
     "json-loader": "^0.5.4",
     "react": "~16.0.0-alpha.12",
@@ -22,6 +20,8 @@
     "react-navigation": "^1.0.0-beta.9"
   },
   "devDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "dd-rn-packager": "~0.46.8"
   }
 }
