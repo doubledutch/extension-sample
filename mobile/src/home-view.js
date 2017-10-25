@@ -9,7 +9,7 @@ const fbc = FirebaseConnector(client, 'extension-sample')
 
 fbc.initializeAppWithSimpleBackend()
 
-class HomeView extends Component {
+export default class HomeView extends Component {
   constructor() {
     super()
 
@@ -20,7 +20,7 @@ class HomeView extends Component {
       .catch(err => console.error(err))
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.signin.then(() => {
       const userPrivateRef = fbc.database.private.userRef('tasks')
       userPrivateRef.on('child_added', data => {
@@ -153,5 +153,3 @@ const s = ReactNative.StyleSheet.create({
     flex: 1
   }
 })
-
-export default HomeView
