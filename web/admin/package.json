@@ -2,23 +2,17 @@
   "name": "admin",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
-  "devDependencies": {
-    "concurrently": "^3.4.0",
-    "less-watch-compiler": "^1.4.4",
-    "react-scripts": "^1.0.7"
-  },
   "dependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "@doubledutch/admin-client": "^1.0.0",
+    "@doubledutch/firebase-connector": "^3.1.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-scripts": "1.0.14"
   },
   "scripts": {
-    "start": "concurrently \"npm run start-less\" \"react-scripts start\"",
-    "build": "npm run build-less && react-scripts build && npm run build-static",
+    "start": "node emulator",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "start-less": "node_modules/less-watch-compiler/less-watch-compiler.js style/ public/style/ index.less",
-    "build-less": "lessc style/index.less -x build/static/css/index.css",
-    "build-static": "cp public/static/* build/static/ | true"
+    "eject": "react-scripts eject"
   }
 }
