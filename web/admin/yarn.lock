@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@doubledutch/admin-client@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@doubledutch/admin-client/-/admin-client-1.0.0.tgz#1161b1d01b45cd62a68ce2296c2c44c7b10b0b47"
+"@doubledutch/admin-client@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@doubledutch/admin-client/-/admin-client-1.0.1.tgz#3691ce4fdd3db4ef6b387bc4568048b76e4a1a9b"
 
 "@doubledutch/firebase-connector@^3.1.0":
   version "3.1.0"
