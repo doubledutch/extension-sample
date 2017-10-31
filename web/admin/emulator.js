@@ -13,7 +13,7 @@ http.createServer((req, res) => {
   <meta charset="utf-8">
   <style>
     body { height:100%; width:100%; margin:0; font-family:sans-serif; }
-    iframe { height: calc(100% - 60px); width:100%; border:none; }
+    iframe { height: calc(100% - 30px); width:100%; border:none; }
     #header { height: 30px; background-color: #009acd; text-align:center; line-height:30px; color: white; }
   </style>
   <script>
