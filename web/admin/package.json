@@ -4,8 +4,8 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "@doubledutch/admin-client": "^1.0.2",
-    "@doubledutch/firebase-connector": "^3.2.3",
+    "@doubledutch/admin-client": "^1.2.0",
+    "@doubledutch/firebase-connector": "^3.3.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-scripts": "1.0.14"
