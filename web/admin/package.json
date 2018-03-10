@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
+  "license": "apache-2.0",
   "dependencies": {
     "@doubledutch/admin-client": "^1.2.0",
     "@doubledutch/firebase-connector": "^3.3.1",

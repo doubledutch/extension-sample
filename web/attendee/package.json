@@ -12,6 +12,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
+  "license": "apache-2.0",
   "scripts": {
     "start": "concurrently \"npm run start-less\" \"react-scripts start\"",
     "build": "npm run build-less && react-scripts build && npm run build-static",
