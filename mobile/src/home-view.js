@@ -19,6 +19,7 @@ import ReactNative, {
   KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView
 } from 'react-native'
 
+// rn-client must be imported before FirebaseConnector
 import client, { Avatar, TitleBar } from '@doubledutch/rn-client'
 import FirebaseConnector from '@doubledutch/firebase-connector'
 const fbc = FirebaseConnector(client, 'extension-sample')
