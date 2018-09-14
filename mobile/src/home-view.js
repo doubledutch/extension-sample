@@ -15,8 +15,8 @@
  */
 
 import React, { PureComponent } from 'react'
-import ReactNative, {
-  KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView
+import {
+  KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View
 } from 'react-native'
 
 // rn-client must be imported before FirebaseConnector
@@ -123,7 +123,7 @@ function renderCreator(task) {
 }
 
 const fontSize = 18
-const s = ReactNative.StyleSheet.create({
+const s = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#d9e1f9',
