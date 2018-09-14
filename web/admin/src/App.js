@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import './App.css'
 
 import client from '@doubledutch/admin-client'
-import FirebaseConnector from '@doubledutch/firebase-connector'
-const fbc = FirebaseConnector(client, 'extension-sample')
+import {provideFirebaseConnectorToReactComponent} from '@doubledutch/firebase-connector'
 
-fbc.initializeAppWithSimpleBackend()
-
-export default class App extends Component {
-  constructor() {
-    super()
+class App extends PureComponent {
+  constructor(props) {
+    super(props)
 
     this.state = { sharedTasks: [] }
   }
 
   componentDidMount() {
+    const {fbc} = this.props
     fbc.signinAdmin()
     .then(user => {
       const sharedRef = fbc.database.public.allRef('tasks')
@@ -70,6 +68,8 @@ export default class App extends Component {
   }
 
   markComplete(task) {
-    fbc.database.public.allRef('tasks').child(task.key).remove()
+    this.props.fbc.database.public.allRef('tasks').child(task.key).remove()
   }
 }
+
+export default provideFirebaseConnectorToReactComponent(client, 'extension-sample', (props, fbc) => <App {...props} fbc={fbc} />, PureComponent)

@@ -14,31 +14,30 @@
  * limitations under the License.
  */
 
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import ReactNative, {
   KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView
 } from 'react-native'
 
 // rn-client must be imported before FirebaseConnector
 import client, { Avatar, TitleBar } from '@doubledutch/rn-client'
-import FirebaseConnector from '@doubledutch/firebase-connector'
-const fbc = FirebaseConnector(client, 'extension-sample')
+import {provideFirebaseConnectorToReactComponent} from '@doubledutch/firebase-connector'
 
-fbc.initializeAppWithSimpleBackend()
-
-export default class HomeView extends Component {
-  constructor() {
-    super()
+class HomeView extends PureComponent {
+  constructor(props) {
+    super(props)
 
     this.state = { task: '', userPrivateTasks: [], sharedTasks: [] }
+    client.getCurrentUser().then(currentUser => this.setState({currentUser}))
 
-    this.signin = fbc.signin()
+    this.signin = props.fbc.signin()
       .then(user => this.user = user)
 
     this.signin.catch(err => console.error(err))
   }
 
   componentDidMount() {
+    const {fbc} = this.props
     this.signin.then(() => {
       const userPrivateRef = fbc.database.private.userRef('tasks')
       userPrivateRef.on('child_added', data => {
@@ -59,6 +58,7 @@ export default class HomeView extends Component {
   }
 
   render() {
+    if (!this.state.currentUser) return null
     const { userPrivateTasks, sharedTasks } = this.state
     const tasks = userPrivateTasks.map(t => ({...t, type:'private'})).concat(
       sharedTasks.map(t => ({...t, type:'shared'}))
@@ -89,14 +89,15 @@ export default class HomeView extends Component {
     )
   }
 
-  createPrivateTask = () => this.createTask(fbc.database.private.userRef)
-  createSharedTask = () => this.createTask(fbc.database.public.allRef)
+  createPrivateTask = () => this.createTask(this.props.fbc.database.private.userRef)
+  createSharedTask = () => this.createTask(this.props.fbc.database.public.allRef)
   
   createTask(ref) {
+    const {currentUser} = this.state
     if (this.user && this.state.task) {
       ref('tasks').push({
         text: this.state.task,
-        creator: client.currentUser
+        creator: currentUser
       })
       .then(() => this.setState({task: ''}))
       .catch (x => console.error(x))
@@ -104,6 +105,7 @@ export default class HomeView extends Component {
   }
 
   markComplete(task) {
+    const {fbc} = this.props
     getRef(task).remove()
 
     function getRef(task) {
@@ -171,3 +173,5 @@ const s = ReactNative.StyleSheet.create({
     flex: 1
   }
 })
+
+export default provideFirebaseConnectorToReactComponent(client, 'extension-sample', (props, fbc) => <HomeView {...props} fbc={fbc} />, PureComponent)

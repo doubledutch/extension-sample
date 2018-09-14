@@ -5,10 +5,10 @@
   "homepage": ".",
   "license": "apache-2.0",
   "dependencies": {
-    "@doubledutch/admin-client": "^1.2.0",
-    "@doubledutch/firebase-connector": "^3.3.1",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "@doubledutch/admin-client": "^2.0.1",
+    "@doubledutch/firebase-connector": "^4.0.1",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
     "react-scripts": "1.0.14"
   },
   "scripts": {
