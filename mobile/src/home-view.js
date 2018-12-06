@@ -71,6 +71,7 @@ class HomeView extends PureComponent {
 
   render() {
     if (!this.state.currentUser) return null
+    const { suggestedTitle } = this.props
     const { userPrivateTasks, sharedTasks } = this.state
     const tasks = userPrivateTasks
       .map(t => ({ ...t, type: 'private' }))
@@ -81,7 +82,7 @@ class HomeView extends PureComponent {
         style={s.container}
         behavior={Platform.select({ ios: 'padding', android: null })}
       >
-        <TitleBar title="To do ✅" client={client} signin={this.signin} />
+        <TitleBar title={suggestedTitle || 'To do ✅'} client={client} signin={this.signin} />
         <ScrollView style={s.scroll}>
           {tasks.map(task => (
             <View key={task.key} style={s.task}>
