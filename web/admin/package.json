@@ -5,15 +5,13 @@
   "homepage": ".",
   "license": "apache-2.0",
   "dependencies": {
-    "@doubledutch/admin-client": "^2.0.1",
-    "@doubledutch/firebase-connector": "^4.0.1",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
-    "react-scripts": "1.0.14"
+    "@doubledutch/admin-client": "^2.1.1",
+    "@doubledutch/firebase-connector": "^4.1.2",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "react-scripts": "2.1.3"
   },
   "devDependencies": {
-    "babel-eslint": "^9.0.0",
-    "eslint": "^4.4.1",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-config-prettier": "^2.3.0",
     "eslint-import-resolver-node": "^0.3.1",
