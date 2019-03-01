@@ -33,17 +33,20 @@ class App extends PureComponent {
     fbc.signinAdmin().then(() => {
       const sharedRef = fbc.database.public.allRef('tasks')
       sharedRef.on('child_added', data => {
-        this.setState({
-          sharedTasks: [...this.state.sharedTasks, { ...data.val(), key: data.key }],
-        })
+        this.setState(({ sharedTasks }) => ({
+          sharedTasks: [...sharedTasks, { ...data.val(), key: data.key }],
+        }))
       })
       sharedRef.on('child_removed', data => {
-        this.setState({ sharedTasks: this.state.sharedTasks.filter(x => x.key !== data.key) })
+        this.setState(({ sharedTasks }) => ({
+          sharedTasks: sharedTasks.filter(x => x.key !== data.key),
+        }))
       })
     })
   }
 
   render() {
+    const { sharedTasks } = this.state
     return (
       <div className="App">
         <p className="App-intro">
@@ -55,7 +58,7 @@ class App extends PureComponent {
         </p>
         <h3>Public tasks:</h3>
         <ul>
-          {this.state.sharedTasks.map(task => {
+          {sharedTasks.map(task => {
             const { image, firstName, lastName } = task.creator
             return (
               <li key={task.key}>
@@ -64,7 +67,9 @@ class App extends PureComponent {
                   {' '}
                   {firstName} {lastName} - {task.text} -{' '}
                 </span>
-                <button onClick={() => this.markComplete(task)}>Mark complete</button>
+                <button onClick={() => this.markComplete(task)} type="button">
+                  Mark complete
+                </button>
               </li>
             )
           })}
@@ -74,7 +79,8 @@ class App extends PureComponent {
   }
 
   markComplete(task) {
-    this.props.fbc.database.public
+    const { fbc } = this.props
+    fbc.database.public
       .allRef('tasks')
       .child(task.key)
       .remove()

@@ -47,30 +47,34 @@ class HomeView extends PureComponent {
     this.signin.then(() => {
       const userPrivateRef = fbc.database.private.userRef('tasks')
       userPrivateRef.on('child_added', data => {
-        this.setState({
-          userPrivateTasks: [...this.state.userPrivateTasks, { ...data.val(), key: data.key }],
-        })
+        this.setState(({ userPrivateTasks }) => ({
+          userPrivateTasks: [...userPrivateTasks, { ...data.val(), key: data.key }],
+        }))
       })
       userPrivateRef.on('child_removed', data => {
-        this.setState({
-          userPrivateTasks: this.state.userPrivateTasks.filter(x => x.key !== data.key),
-        })
+        this.setState(({ userPrivateTasks }) => ({
+          userPrivateTasks: userPrivateTasks.filter(x => x.key !== data.key),
+        }))
       })
 
       const sharedRef = fbc.database.public.allRef('tasks')
       sharedRef.on('child_added', data => {
-        this.setState({
-          sharedTasks: [...this.state.sharedTasks, { ...data.val(), key: data.key }],
-        })
+        this.setState(({ sharedTasks }) => ({
+          sharedTasks: [...sharedTasks, { ...data.val(), key: data.key }],
+        }))
       })
       sharedRef.on('child_removed', data => {
-        this.setState({ sharedTasks: this.state.sharedTasks.filter(x => x.key !== data.key) })
+        this.setState(({ sharedTasks }) => ({
+          sharedTasks: sharedTasks.filter(x => x.key !== data.key),
+        }))
       })
     })
   }
 
   render() {
-    if (!this.state.currentUser) return null
+    const { currentUser, task } = this.state
+
+    if (!currentUser) return null
     const { suggestedTitle } = this.props
     const { userPrivateTasks, sharedTasks } = this.state
     const tasks = userPrivateTasks
@@ -84,13 +88,13 @@ class HomeView extends PureComponent {
       >
         <TitleBar title={suggestedTitle || 'To do ✅'} client={client} signin={this.signin} />
         <ScrollView style={s.scroll}>
-          {tasks.map(task => (
-            <View key={task.key} style={s.task}>
-              <TouchableOpacity onPress={() => this.markComplete(task)}>
+          {tasks.map(t => (
+            <View key={t.key} style={s.task}>
+              <TouchableOpacity onPress={() => this.markComplete(t)}>
                 <Text style={s.checkmark}>✅ </Text>
               </TouchableOpacity>
-              {renderCreator(task)}
-              <Text style={s.taskText}>{task.text}</Text>
+              {renderCreator(t)}
+              <Text style={s.taskText}>{t.text}</Text>
             </View>
           ))}
         </ScrollView>
@@ -98,8 +102,8 @@ class HomeView extends PureComponent {
           <TextInput
             style={s.composeText}
             placeholder="Add task..."
-            value={this.state.task}
-            onChangeText={task => this.setState({ task })}
+            value={task}
+            onChangeText={t => this.setState({ task: t })}
           />
           <View style={s.sendButtons}>
             <TouchableOpacity style={s.sendButton} onPress={this.createPrivateTask}>
@@ -114,15 +118,22 @@ class HomeView extends PureComponent {
     )
   }
 
-  createPrivateTask = () => this.createTask(this.props.fbc.database.private.userRef)
-  createSharedTask = () => this.createTask(this.props.fbc.database.public.allRef)
+  createPrivateTask = () => {
+    const { fbc } = this.props
+    this.createTask(fbc.database.private.userRef)
+  }
+
+  createSharedTask = () => {
+    const { fbc } = this.props
+    this.createTask(fbc.database.public.allRef)
+  }
 
   createTask(ref) {
-    const { currentUser } = this.state
-    if (this.state.task) {
+    const { currentUser, task } = this.state
+    if (task) {
       ref('tasks')
         .push({
-          text: this.state.task,
+          text: task,
           creator: currentUser,
         })
         .then(() => this.setState({ task: '' }))
