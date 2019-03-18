@@ -19,6 +19,7 @@ import React, { PureComponent } from 'react'
 import client from '@doubledutch/admin-client'
 import { provideFirebaseConnectorToReactComponent } from '@doubledutch/firebase-connector'
 
+import { name as extensionName } from './extension.json'
 import './App.css'
 
 class App extends PureComponent {
@@ -89,7 +90,7 @@ class App extends PureComponent {
 
 export default provideFirebaseConnectorToReactComponent(
   client,
-  'extension-sample',
+  extensionName,
   (props, fbc) => <App {...props} fbc={fbc} />,
   PureComponent,
 )

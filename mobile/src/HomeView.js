@@ -29,6 +29,7 @@ import {
 // rn-client must be imported before FirebaseConnector
 import client, { Avatar, TitleBar } from '@doubledutch/rn-client'
 import { provideFirebaseConnectorToReactComponent } from '@doubledutch/firebase-connector'
+import { name as extensionName } from '../extension.json'
 
 class HomeView extends PureComponent {
   constructor(props) {
@@ -217,7 +218,7 @@ const s = StyleSheet.create({
 
 export default provideFirebaseConnectorToReactComponent(
   client,
-  'extension-sample',
+  extensionName,
   (props, fbc) => <HomeView {...props} fbc={fbc} />,
   PureComponent,
 )

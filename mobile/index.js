@@ -15,19 +15,8 @@
  */
 
 import { AppRegistry } from 'react-native'
-import { install } from '@doubledutch/rn-client/webShim'
-import HomeView from './src/home-view'
+import HomeView from './src/HomeView'
+import { name as extensionName } from './extension.json'
 
-function runApp(DD) {
-  AppRegistry.registerComponent('extension-sample', () => HomeView)
-  AppRegistry.runApplication('extension-sample', {
-    rootTag: document.getElementById('react-root'),
-    initialProps: { ddOverride: DD },
-  })
-}
-
-if (window.DD && window.DD.Events) {
-  install(runApp)
-} else {
-  runApp(null)
-}
+AppRegistry.registerComponent(extensionName, () => HomeView)
+AppRegistry.registerComponent('section', () => HomeView)
