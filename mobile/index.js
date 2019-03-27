@@ -18,10 +18,11 @@ import { AppRegistry, YellowBox } from 'react-native'
 import HomeView from './src/HomeView'
 import { name as extensionName } from './extension.json'
 
-YellowBox.ignoreWarnings([
-  'Warning: Async Storage has been extracted',
-  'Warning: WebView has been extracted',
-  'Warning: View.propTypes has been deprecated',
-])
+if (YellowBox)
+  YellowBox.ignoreWarnings([
+    'Warning: Async Storage has been extracted',
+    'Warning: WebView has been extracted',
+    'Warning: View.propTypes has been deprecated',
+  ])
 AppRegistry.registerComponent(extensionName, () => HomeView)
 AppRegistry.registerComponent('section', () => HomeView)
